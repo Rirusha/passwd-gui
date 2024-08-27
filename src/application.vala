@@ -1,4 +1,4 @@
-/* Copyright 2024 <<DEVELOPER-NAME>>
+/* Copyright 2024 Rirusha
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-public sealed class <<APP-NAMESPACE>>.Application: Adw.Application {
+public sealed class PasswdGUI.Application: Adw.Application {
 
     const ActionEntry[] ACTION_ENTRIES = {
         { "quit", quit },
@@ -23,8 +23,8 @@ public sealed class <<APP-NAMESPACE>>.Application: Adw.Application {
 
     public Application () {
         Object (
-            application_id: Config.APP_ID_DYN,
-            resource_base_path: "<<RESOURCES-PATH>>"
+            application_id: Config.APP_ID,
+            resource_base_path: "/io/github/Rirusha/PasswdGUI/"
         );
     }
 

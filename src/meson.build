@@ -2,7 +2,7 @@ vapi_sources = files(
   'config.vapi',
 )
 
-<<APP-COMMAND-C-NAME>>_sources = [
+passwd_gu_i_sources = [
   vapi_sources,
   blueprints,
   resources
@@ -12,23 +12,23 @@ vapi_sources = files(
   'main-window.vala',
 )
 
-<<APP-COMMAND-C-NAME>>_vala_args = [
+passwd_gu_i_vala_args = [
   '--target-glib', '2.76',
   '--vapidir', meson.current_source_dir(),
   '--gresources', resource_files,
   '--gresourcesdir=data/'
 ]
 
-<<APP-COMMAND-C-NAME>>_c_args = [
+passwd_gu_i_c_args = [
   '-include', 'config.h',
 ]
 
 executable(
-  '<<APP-COMMAND>>',
-  <<APP-COMMAND-C-NAME>>_sources,
+  'passwd-gui',
+  passwd_gu_i_sources,
   include_directories: config_h_dir,
-  vala_args: <<APP-COMMAND-C-NAME>>_vala_args,
-  c_args: <<APP-COMMAND-C-NAME>>_c_args,
-  dependencies: <<APP-COMMAND-C-NAME>>_dependencies,
+  vala_args: passwd_gu_i_vala_args,
+  c_args: passwd_gu_i_c_args,
+  dependencies: passwd_gu_i_dependencies,
   install: true,
 )

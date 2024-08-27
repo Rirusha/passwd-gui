@@ -1,4 +1,4 @@
-/* Copyright 2024 <<DEVELOPER-NAME>>
+/* Copyright 2024 Rirusha
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,45 +15,45 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-[GtkTemplate (ui = "<<RESOURCES-PATH>>ui/main-window.ui")]
-public sealed class <<APP-NAMESPACE>>.MainWindow: Adw.ApplicationWindow {
+[GtkTemplate (ui = "/io/github/Rirusha/PasswdGUI/ui/main-window.ui")]
+public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
+
+    [GtkChild]
+    unowned Adw.WindowTitle window_title;
+    [GtkChild]
+    unowned Adw.StatusPage status_page;
+    [GtkChild]
+    unowned Adw.PasswordEntryRow passwd_entry;
 
     const ActionEntry[] ACTION_ENTRIES = {
-        { "preferences", on_preferences_action },
         { "about", on_about_action },
     };
 
-    public MainWindow (<<APP-NAMESPACE>>.Application app) {
+    public MainWindow (PasswdGUI.Application app) {
         Object (application: app);
     }
 
     construct {
-        var settings = new Settings (Config.APP_ID);
-
         add_action_entries (ACTION_ENTRIES, this);
-
-        settings.bind ("window-width", this, "default-width", SettingsBindFlags.DEFAULT);
-        settings.bind ("window-height", this, "default-height", SettingsBindFlags.DEFAULT);
-        settings.bind ("window-maximized", this, "maximized", SettingsBindFlags.DEFAULT);
-    }
-
-    void on_preferences_action () {
-        message ("Hello, stranger…");
     }
 
     void on_about_action () {
         var about = new Adw.AboutDialog () {
-            application_name = "<<APP-NAME>>",
-            application_icon = Config.APP_ID_DYN,
-            developer_name = "<<DEVELOPER-NAME>>",
+            application_name = "Passwd GUI",
+            application_icon = Config.APP_ID,
+            developer_name = "Rirusha",
             version = Config.VERSION,
-            // Translators: NAME <EMAIL.COM> /n NAME <EMAIL.COM>
+            // Translators: NAME <EMAIL.COM>
             translator_credits = _("translator-credits"),
             license_type = Gtk.License.GPL_3_0,
-            copyright = "© 2024 <<DEVELOPER-NAME>>",
+            copyright = "© 2024 Rirusha",
             release_notes_version = Config.VERSION
         };
 
         about.present (this);
+    }
+
+    void to_start () {
+        
     }
 }

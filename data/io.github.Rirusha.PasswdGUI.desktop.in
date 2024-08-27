@@ -1,11 +1,11 @@
 [Desktop Entry]
 # Translators: app name should be translated
-Name=<<APP-NAME>> (Devel)
+Name=Passwd GUI
 Comment=
 # Translators: keep number of ';'
 Keywords=
-Exec=<<APP-COMMAND>>
-Icon=<<APP-ID>>-Devel
+Exec=passwd-gui
+Icon=io.github.Rirusha.PasswdGUI
 Terminal=false
 Type=Application
 Categories=

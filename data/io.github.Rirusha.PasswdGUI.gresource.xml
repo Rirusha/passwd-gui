@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="<<RESOURCES-PATH>>">
-    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
+  <gresource prefix="/io/github/Rirusha/PasswdGUI/">
     <file>style.css</file>
     <file preprocess="xml-stripblanks">ui/main-window.ui</file>
   </gresource>

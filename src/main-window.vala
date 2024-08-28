@@ -23,6 +23,8 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
     [GtkChild]
     unowned Adw.ToastOverlay toast_overlay;
     [GtkChild]
+    unowned Gtk.Stack stack;
+    [GtkChild]
     unowned Adw.StatusPage status_page;
     [GtkChild]
     unowned Adw.PasswordEntryRow current_passwd_entry;
@@ -32,6 +34,8 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
     unowned Adw.PasswordEntryRow repeat_new_passwd_entry;
     [GtkChild]
     unowned Gtk.Button apply_button;
+    [GtkChild]
+    unowned Gtk.Button retry_button;
 
     const ActionEntry[] ACTION_ENTRIES = {
         { "about", on_about_action },
@@ -45,10 +49,22 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
         add_action_entries (ACTION_ENTRIES, this);
 
         apply_button.clicked.connect (on_apply);
+        retry_button.clicked.connect (on_retry);
 
         current_passwd_entry.changed.connect (check_button_sensitive);
         new_passwd_entry.changed.connect (check_button_sensitive);
         repeat_new_passwd_entry.changed.connect (check_button_sensitive);
+    }
+
+    void on_retry () {
+        stack.visible_child_name = "main";
+
+        new_passwd_entry.remove_css_class ("error");
+        repeat_new_passwd_entry.remove_css_class ("error");
+
+        current_passwd_entry.text = "";
+        new_passwd_entry.text = "";
+        repeat_new_passwd_entry.text = "";
     }
 
     void on_apply () {
@@ -60,13 +76,17 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
             return;
         }
 
-        sensitive = false;
+        stack.visible_child_name = "loading";
 
         spawn_change_passwd.begin (current_passwd_entry.text, new_passwd_entry.text, (obj, res) => {
             int status_code = spawn_change_passwd.end (res);
-            message (status_code.to_string ());
+            if (status_code == 0) {
+                stack.visible_child_name = "success";
 
-            sensitive = true;
+            } else {
+                toast_overlay.add_toast (new Adw.Toast (_("Wrong current password or new password weak")));
+                stack.visible_child_name = "main";
+            }
         });
     }
 

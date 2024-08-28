@@ -25,48 +25,105 @@ template $PasswdGUIMainWindow : Adw.ApplicationWindow {
       Adw.Clamp {
         maximum-size: 500;
 
-        Adw.StatusPage status_page {
-          icon-name: "changes-prevent-symbolic";
-          title: _("Change password");
-          description: _("Enter your current password and new");
+        Stack stack {
+          transition-type: slide_left;
 
-          Box {
-            orientation: vertical;
-            spacing: 12;
+          StackPage {
+            name: "main";
+            child: Box {
+              orientation: vertical;
 
-            ListBox {
-              styles [
-                "boxed-list"
-              ]
+              Adw.StatusPage status_page {
+                icon-name: "changes-prevent-symbolic";
+                title: _("Change password");
+                description: _("Enter your current password and new");
+                valign: center;
+                vexpand: true;
 
-              Adw.PasswordEntryRow current_passwd_entry {
-                title: _("Current password");
+                Box {
+                  orientation: vertical;
+                  spacing: 12;
+
+                  ListBox {
+                    styles [
+                      "boxed-list"
+                    ]
+
+                    Adw.PasswordEntryRow current_passwd_entry {
+                      title: _("Current password");
+                    }
+                  }
+
+                  ListBox {
+                    styles [
+                      "boxed-list"
+                    ]
+
+                    Adw.PasswordEntryRow new_passwd_entry {
+                      title: _("New password");
+                    }
+
+                    Adw.PasswordEntryRow repeat_new_passwd_entry {
+                      title: _("Repeat new password");
+                    }
+                  }
+                }
               }
-            }
 
-            ListBox {
-              styles [
-                "boxed-list"
-              ]
+              Button apply_button {
+                styles [
+                  "pill",
+                  "suggested-action"
+                ]
 
-              Adw.PasswordEntryRow new_passwd_entry {
-                title: _("New password");
+                margin-start: 12;
+                margin-end: 12;
+                margin-bottom: 12;
+                valign: end;
+                sensitive: false;
+                label: _("Apply");
+              }
+            };
+          }
+
+          StackPage {
+            name: "loading";
+            child: Spinner {
+              width-request: 32;
+              height-request: 32;
+              hexpand: false;
+              vexpand: false;
+              valign: center;
+              halign: center;
+              spinning: true;
+            };
+          }
+
+          StackPage {
+            name: "success";
+            child: Box {
+              orientation: vertical;
+
+              Adw.StatusPage {
+                icon-name: "emblem-default-symbolic";
+                title: _("Password successfuly changed");
+                valign: center;
+                vexpand: true;
               }
 
-              Adw.PasswordEntryRow repeat_new_passwd_entry {
-                title: _("Repeat new password");
+              Button retry_button {
+                styles [
+                  "pill"
+                ]
+
+                margin-start: 12;
+                margin-end: 12;
+                margin-bottom: 12;
+                valign: end;
+                margin-top: 160;
+                label: "Retry";
               }
-            }
-
-            Button apply_button {
-              styles [
-                "pill",
-                "suggested-action"
-              ]
-
-              sensitive: false;
-              label: _("Apply");
-            }
+            };
           }
         }
       }

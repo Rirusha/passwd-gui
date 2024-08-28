@@ -26,12 +26,9 @@ namespace PasswdGUI {
             Pid child_pid;
 
             string path_to_script = Path.build_filename (
-                Config.DATADIR,
-                "scripts",
+                Config.SCRIPTSDIR,
                 "change-passwd.sh"
             );
-
-            message (path_to_script);
 
             Process.spawn_async_with_fds (
                 null,

@@ -19,13 +19,9 @@
 public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
 
     [GtkChild]
-    unowned Adw.WindowTitle window_title;
-    [GtkChild]
     unowned Adw.ToastOverlay toast_overlay;
     [GtkChild]
     unowned Gtk.Stack stack;
-    [GtkChild]
-    unowned Adw.StatusPage status_page;
     [GtkChild]
     unowned Adw.PasswordEntryRow current_passwd_entry;
     [GtkChild]

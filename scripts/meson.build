@@ -1,5 +1,3 @@
-scriptsdir = join_paths(datadir, 'scripts')
-
 scripts = [
   'change-passwd.sh'
 ]

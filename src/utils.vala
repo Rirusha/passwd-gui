@@ -17,57 +17,51 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-public class PasswdGUI.Spawner {
+namespace PasswdGUI {
 
-    
+    public async int spawn_change_passwd (string current_password, string new_password) {
+        int status_code = 0;
 
-    static Pid spawn_passwd () {
         try {
             Pid child_pid;
 
-            int standard_input;
-            int standard_output;
-            int standard_error;
-
-            Process.spawn_async_with_pipes (
-                null,
-                { "passwd" },
-                null,
-                SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
-                null,
-                out child_pid,
-                out standard_input,
-                out standard_output,
-                out standard_error
+            string path_to_script = Path.build_filename (
+                Config.DATADIR,
+                "scripts",
+                "change-passwd.sh"
             );
 
-            IOChannel output = new IOChannel.unix_new (standard_output);
-            output.add_watch (IOCondition.IN | IOCondition.HUP, (channel, condition) => {
-                if ((condition & IOCondition.HUP) != 0) {
-                    return false;
-                }
+            message (path_to_script);
 
-                string line;
-                try {
-                    channel.read_line (out line, null, null);
-
-                } catch (Error e) {
-                    error (e.message);
-                }
-                
-                result.append_val (line);
-
-                return true;
-            });
+            Process.spawn_async_with_fds (
+                null,
+                {
+                    "sh",
+                    path_to_script,
+                    current_password,
+                    new_password
+                },
+                null,
+                SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD | SpawnFlags.CHILD_INHERITS_STDIN,
+                null,
+                out child_pid,
+                -1,
+                stdout.fileno (),
+                stderr.fileno ()
+            );
 
             ChildWatch.add (child_pid, (pid, status) => {
+                status_code = Process.exit_status (status);
                 Process.close_pid (pid);
+                Idle.add (spawn_change_passwd.callback);
             });
 
         } catch (SpawnError e) {
             error (e.message);
         }
 
-        return child_pid;
+        yield;
+
+        return status_code;
     }
 }

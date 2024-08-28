@@ -10,6 +10,7 @@ passwd_gu_i_sources = [
   'main.vala',
   'application.vala',
   'main-window.vala',
+  'utils.vala',
 )
 
 passwd_gu_i_vala_args = [

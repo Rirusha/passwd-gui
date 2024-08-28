@@ -21,9 +21,17 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
     [GtkChild]
     unowned Adw.WindowTitle window_title;
     [GtkChild]
+    unowned Adw.ToastOverlay toast_overlay;
+    [GtkChild]
     unowned Adw.StatusPage status_page;
     [GtkChild]
-    unowned Adw.PasswordEntryRow passwd_entry;
+    unowned Adw.PasswordEntryRow current_passwd_entry;
+    [GtkChild]
+    unowned Adw.PasswordEntryRow new_passwd_entry;
+    [GtkChild]
+    unowned Adw.PasswordEntryRow repeat_new_passwd_entry;
+    [GtkChild]
+    unowned Gtk.Button apply_button;
 
     const ActionEntry[] ACTION_ENTRIES = {
         { "about", on_about_action },
@@ -35,6 +43,37 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
 
     construct {
         add_action_entries (ACTION_ENTRIES, this);
+
+        apply_button.clicked.connect (on_apply);
+
+        current_passwd_entry.changed.connect (check_button_sensitive);
+        new_passwd_entry.changed.connect (check_button_sensitive);
+        repeat_new_passwd_entry.changed.connect (check_button_sensitive);
+    }
+
+    void on_apply () {
+        if (new_passwd_entry.text != repeat_new_passwd_entry.text) {
+            new_passwd_entry.add_css_class ("error");
+            repeat_new_passwd_entry.add_css_class ("error");
+            toast_overlay.add_toast (new Adw.Toast (_("Passwords don't match")));
+            set_focus (new_passwd_entry);
+            return;
+        }
+
+        sensitive = false;
+
+        spawn_change_passwd.begin (current_passwd_entry.text, new_passwd_entry.text, (obj, res) => {
+            int status_code = spawn_change_passwd.end (res);
+            message (status_code.to_string ());
+
+            sensitive = true;
+        });
+    }
+
+    void check_button_sensitive () {
+        apply_button.sensitive = current_passwd_entry.text_length > 0 &&
+                                 new_passwd_entry.text_length > 0 &&
+                                 repeat_new_passwd_entry.text_length > 0;
     }
 
     void on_about_action () {
@@ -51,9 +90,5 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
         };
 
         about.present (this);
-    }
-
-    void to_start () {
-        
     }
 }

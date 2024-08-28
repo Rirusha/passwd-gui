@@ -3,7 +3,7 @@ using Adw 1;
 
 template $PasswdGUIMainWindow : Adw.ApplicationWindow {
   default-width: 360;
-  default-height: 360;
+  default-height: 640;
   width-request: 360;
   height-request: 294;
 
@@ -21,25 +21,52 @@ template $PasswdGUIMainWindow : Adw.ApplicationWindow {
       };
     }
 
-    content: Adw.Clamp {
-      margin-bottom: 12;
-      margin-end: 12;
-      margin-top: 12;
-      margin-start: 12;
-      maximum-size: 500;
+    content: Adw.ToastOverlay toast_overlay {
+      Adw.Clamp {
+        maximum-size: 500;
 
-      Adw.StatusPage status_page {
-        icon-name: "dialog-error-symbolic";
-        title: "";
+        Adw.StatusPage status_page {
+          icon-name: "changes-prevent-symbolic";
+          title: _("Change password");
+          description: _("Enter your current password and new");
 
-        ListBox {
-          styles [
-            "boxed-list"
-          ]
+          Box {
+            orientation: vertical;
+            spacing: 12;
 
-          Adw.PasswordEntryRow passwd_entry {
-            title: _("Current password");
-            show-apply-button: true;
+            ListBox {
+              styles [
+                "boxed-list"
+              ]
+
+              Adw.PasswordEntryRow current_passwd_entry {
+                title: _("Current password");
+              }
+            }
+
+            ListBox {
+              styles [
+                "boxed-list"
+              ]
+
+              Adw.PasswordEntryRow new_passwd_entry {
+                title: _("New password");
+              }
+
+              Adw.PasswordEntryRow repeat_new_passwd_entry {
+                title: _("Repeat new password");
+              }
+            }
+
+            Button apply_button {
+              styles [
+                "pill",
+                "suggested-action"
+              ]
+
+              sensitive: false;
+              label: _("Apply");
+            }
           }
         }
       }

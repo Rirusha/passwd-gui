@@ -14,6 +14,7 @@ libadwaita = dependency('libadwaita-1', version: '>= 1.5')
 gee = dependency('gee-0.8')
 
 app_id = 'io.github.Rirusha.PasswdGUI'
+datadir = join_paths(get_option('prefix'), get_option('datadir'))
 
 conf = configuration_data()
 conf.set_quoted('APP_ID', app_id)
@@ -22,7 +23,7 @@ conf.set_quoted('PACKAGE_NAME', meson.project_name())
 conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-conf.set_quoted('DATADIR', join_paths(get_option('prefix'), get_option('datadir')))
+conf.set_quoted('DATADIR', datadir)
 conf.set_quoted('GNOMELOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
 
 subdir('data')
@@ -37,6 +38,7 @@ configure_file(output: 'config.h', configuration: conf)
 config_h_dir = include_directories('.')
 
 subdir('po')
+subdir('scripts')
 subdir('src')
 subdir('tests')
 

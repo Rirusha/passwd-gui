@@ -1,3 +1,3 @@
 # Passwd GUI
 
-Простое приложение для изменения пароля через passwd
+A simple application to change your password via passwd.

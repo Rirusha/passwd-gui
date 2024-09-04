@@ -7,9 +7,10 @@ passwd_gu_i_sources = [
   blueprints,
   resources
 ] + files(
-  'main.vala',
   'application.vala',
+  'error-dialog.vala',
   'main-window.vala',
+  'main.vala',
   'utils.vala',
 )
 

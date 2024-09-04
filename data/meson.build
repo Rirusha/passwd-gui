@@ -27,6 +27,7 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
+    'ui/error-dialog.blp',
     'ui/main-window.blp',
   ),
   output: '.',

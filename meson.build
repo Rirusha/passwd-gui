@@ -11,7 +11,6 @@ gnome = import('gnome')
 
 gtk = dependency('gtk4', version: '>= 4.14')
 libadwaita = dependency('libadwaita-1', version: '>= 1.5')
-gee = dependency('gee-0.8')
 
 app_id = 'io.github.Rirusha.PasswdGUI'
 datadir = join_paths(get_option('prefix'), get_option('datadir'))
@@ -32,8 +31,7 @@ subdir('data')
 
 passwd_gu_i_dependencies = [
   gtk,
-  libadwaita,
-  gee
+  libadwaita
 ]
 
 configure_file(output: 'config.h', configuration: conf)

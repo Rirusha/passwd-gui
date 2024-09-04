@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PasswdGUIErrorDialog : Adw.Dialog {
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      title-widget: Adw.WindowTitle {
+        title: _("Error");
+      };
+    }
+
+    content: Adw.StatusPage {
+      icon-name: "dialog-warning-symbolic";
+      title: _("There is a problem");
+      description: _("The wrong password or the new password is weak.");
+
+      Button try_again_button {
+        styles [
+          "pill",
+          "suggested-action"
+        ]
+
+        label: _("Try again");
+      }
+    };
+  }
+}

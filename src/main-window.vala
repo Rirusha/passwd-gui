@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * SPDX-License-Identifier: GPL-3.0-only
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 [GtkTemplate (ui = "/io/github/Rirusha/PasswdGUI/ui/main-window.ui")]
@@ -80,8 +80,11 @@ public sealed class PasswdGUI.MainWindow: Adw.ApplicationWindow {
                 stack.visible_child_name = "success";
 
             } else {
-                toast_overlay.add_toast (new Adw.Toast (_("Wrong current password or new password weak")));
-                stack.visible_child_name = "main";
+                var dialog = new ErrorDialog ();
+                dialog.closed.connect (() => {
+                    stack.visible_child_name = "main";
+                });
+                dialog.present (this);
             }
         });
     }

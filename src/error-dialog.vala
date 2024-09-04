@@ -1,4 +1,4 @@
-/* Copyright 2023-2024 Rirusha
+/* Copyright 2024 Rirusha
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+[GtkTemplate (ui = "/io/github/Rirusha/PasswdGUI/ui/error-dialog.ui")]
+public sealed class PasswdGUI.ErrorDialog: Adw.Dialog {
 
-public int main (string[] args) {
+    [GtkChild]
+    unowned Gtk.Button try_again_button;
 
-    Test.add_func ("/test/example", () => {
-        message ("Oh, fine!");
-    });
-
-    return Test.run ();
+    construct {
+        try_again_button.clicked.connect (() => {
+            close ();
+        });
+    }
 }

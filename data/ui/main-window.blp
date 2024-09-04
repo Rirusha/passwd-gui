@@ -11,9 +11,9 @@ template $PasswdGUIMainWindow : Adw.ApplicationWindow {
     [top]
     Adw.HeaderBar {
       [end]
-      MenuButton {
-        icon-name: "open-menu-symbolic";
-        menu-model: primary_menu;
+      Button {
+        icon-name: "org.gnome.Settings-about-symbolic";
+        action-name: "win.about";
       }
 
       title-widget: Adw.WindowTitle window_title {
@@ -79,6 +79,7 @@ template $PasswdGUIMainWindow : Adw.ApplicationWindow {
                 margin-start: 12;
                 margin-end: 12;
                 margin-bottom: 12;
+                margin-top: 12;
                 valign: end;
                 sensitive: false;
                 label: _("Apply");
@@ -129,10 +130,4 @@ template $PasswdGUIMainWindow : Adw.ApplicationWindow {
       }
     };
   };
-}
-
-menu primary_menu {
-  section {
-    item (_("About Passwd GUI"), "win.about")
-  }
 }

@@ -1,0 +1,5 @@
+data/io.github.Rirusha.PasswdGUI.desktop.in
+data/ui/error-dialog.blp
+data/ui/main-window.blp
+src/main.vala
+src/main-window.vala
